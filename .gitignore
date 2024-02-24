@@ -1,6 +1,6 @@
 .git42
 .githome
-DS_store
+.DS_Store
 *.out
 *.o
 gitscript.sh
