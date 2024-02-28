@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:30:01 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/02/25 20:30:41 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:31:46 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*join;
@@ -46,6 +47,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(join + s1len, s2, s2len + 1);
 	return (join);
 }
+
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	i;
@@ -63,4 +65,16 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		dest[i] = '\0';
 	}
 	return (src_size);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }
