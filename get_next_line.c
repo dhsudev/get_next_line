@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:13:30 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/04 12:24:07 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:26:21 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	*get_next_line(int fd)
 		// Check if the read fails
 		// Check if EOF
 		// Handle multiple file descriptors (i thinks that my logic will do it?)
+		// Revise mallocs and free if it fails
 	// TODO: write a main to check with multiple fd and not only files (4example stdinput?)
 }
