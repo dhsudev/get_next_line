@@ -9,4 +9,3 @@ Firts plan
 	read from fd till buffer is full
 	if buffer contains a newline save the rest for later
 	return the print line
-	

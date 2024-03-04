@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:31:21 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/04 10:16:54 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/04 10:20:33 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,14 @@ char	*ft_read(int fd, char *str)
 		ft_strlcpy(str, buff[i], ft_strlen(buff[i])); // guardar lo demas pa luego
 		return (line);
 	}
-		
-	}
 	return (line)
-	
 }
 
 char	*get_next_line(int fd)
 {
-	char	*buff;
-	int		i;
-	char	*pre;
-	char	*line;
-
 	// comprovar cositas
-	 //TODO: reorganizar caos (prioridad 1)
-	read(fd, buff, BUFFER_SIZE);
-	buff = ft_strjoin(pre, buff); // unir lo que acabo de leer a lo que tenia anter
-	if (ft_strchr(buff, '\n')) // comprobar si lo que tengo es devolvible
-	{
-		while (buff[i] != '\n')
-			i++;
-		ft_strlcpy(line, buff, i); // copiar lo que sirve
-		i++;
-		ft_strlcpy(pre, buff[i], ft_strlen(buff[i])); // guardar lo demas pa luego
-		return (line);
-	}
-	else
-	{
-		// Guardar pa luego i seguir leyendo mas
-		ft_strlcpy(pre, buff[i], ft_strlen(buff[i]));
-		get_next_line(fd);
-	}
+	//TODO: reorganizar caos (prioridad 1) mirar como y cuando hay q llamar a ft_read
+	// - intentar entender el bonus? se lo que hace pero no cómo 
+	// - clean ft_read
+	// - main to start checking things!
 }
