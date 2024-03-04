@@ -1,6 +1,7 @@
 strchr
 strjoin
 strlcpy
+substr
 free*
 
 Firts plan
