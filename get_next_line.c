@@ -5,38 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 20:31:21 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/02/26 16:38:57 by ltrevin-         ###   ########.fr       */
+/*   Created: 2024/03/04 12:13:30 by ltrevin-          #+#    #+#             */
+/*   Updated: 2024/03/11 17:11:54 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*read_line(int fd)
+{
+	char	*readed;
+
+	readed = malloc(BUFFER_SIZE * sizeof(char));
+	if (!readed)
+		return (NULL);
+	if (read(fd, readed, BUFFER_SIZE) > 0)
+		return (readed);
+	free(readed);
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
-	char	*buff;
-	int		i;
-	char	*pre;
-	char	*line;
+	static char	*save;
+	char		*current;
+	char		*line;
+	int			index_nl;
 
-	// comprovar cositas
-	
-	// allocar memoria pal buff
-	read(fd, buff, BUFFER_SIZE);
-	buff = ft_strjoin(pre, buff); // unir lo que acabo de leer a lo que tenia anter
-	if (ft_strchr(buff, '\n')) // comprobar si lo que tengo es devolvible
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	current = read_line(fd);
+	if (!current)
+		return (NULL);
+	while (search_nl(line) == -1 && current)
 	{
-		while (buff[i] != '\n')
-			i++;
-		ft_strlcpy(line, buff, i); // copiar lo que sirve
-		i++;
-		ft_strlcpy(pre, buff[i], ft_strlen(buff[i])); // guardar lo demas pa luego
-		return (line);
+		current = read_line(fd);
+		if (!current)
+			return (NULL);
+		index_nl = search_nl(current);
+		if (index_nl > 0)
+		{
+			save = ft_substr(current, index_nl + 1, ft_strlen(current));
+			line = join_strs(line, ft_substr(line, 0, index_nl - 1));
+			break ;
+		}
+		line = join_strs(line, current);
 	}
-	else
-	{
-		// Guardar pa luego i seguir leyendo mas
-		ft_strlcpy(pre, buff[i], ft_strlen(buff[i]));
-		get_next_line(fd);
-	}
+	if (!line)
+		return (NULL);
+	return (line);
 }
