@@ -9,7 +9,7 @@ int main(void)
   int  count;
 
   count = 0;
-  fd = open("example.txt", O_RDONLY);
+  fd = open("file.txt", O_RDONLY);
   while (1)
   {
     next_line = get_next_line(fd);

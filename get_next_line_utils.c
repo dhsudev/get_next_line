@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    get_next_line_utils.c                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:30:01 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/04 10:09:22 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:57:45 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+int	search_nl(const char *s)
 {
-	int		i;
+	size_t		i;
 
-	i = 0;
-	while (s[i] != '\0')
+	if (!s)
+		return (-1);
+	i = ft_strlen(s);
+	while (i > 0)
 	{
-		if (s[i] == (unsigned char)c)
-		{
-			return ((char *)&s[i]);
-		}
-		i ++;
+		if (s[i] == (unsigned char) '\n')
+			return (i);
+		i--;
 	}
-	if ((unsigned char)c == '\0')
-	{
-		return ((char *)&s[i]);
-	}
-	return (NULL);
+	return (-1);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*join_strs(char const *s1, char const *s2)
 {
 	char	*join;
 	size_t	s1len;
@@ -70,7 +66,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
-
+	
 	i = 0;
 	while (s[i] != '\0')
 	{
@@ -88,7 +84,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	slen = ft_strlen(s);
 	if (slen <= start)
-		return (ft_strdup(""));
+	{
+		sub = malloc(ft_strlen("") * (sizeof(char) + 1));
+		if (!sub)
+			return (NULL);
+		ft_strlcpy(sub, "", ft_strlen("") + 1);
+		return (sub);
+	}
 	if (len > (slen - start))
 		len = slen - start;
 	sub = malloc(sizeof(char) * (len + 1));
@@ -96,17 +98,4 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(sub, s + start, len + 1);
 	return (sub);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*s2;
-	size_t	size;
-
-	size = ft_strlen(s1);
-	s2 = malloc(size * sizeof(char) + 1);
-	if (!s2)
-		return (NULL);
-	ft_strlcpy(s2, s1, size + 1);
-	return (s2);
 }
