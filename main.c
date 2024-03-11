@@ -19,6 +19,7 @@ int main(void)
     printf("[%d]:%s\n", count, next_line);
     next_line = NULL;
   }
+  free(next_line);
   close(fd);
   return (0);
 }
