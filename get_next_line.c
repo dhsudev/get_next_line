@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:13:30 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/11 17:19:06 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:45:47 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 char	*read_line(int fd)
 {
 	char	*readed;
+	int		bytes_read;
 
 	readed = malloc(BUFFER_SIZE * sizeof(char));
 	if (!readed)
 		return (NULL);
-	if (read(fd, readed, BUFFER_SIZE) > 0)
+	bytes_read = read(fd, readed, BUFFER_SIZE);
+	if (bytes_read > 0)
 		return (readed);
+	if(bytes_read == 0)// TODO: Do smthg with the EOF
+		bytes_read = 0;
 	free(readed);
 	return (NULL);
 }
@@ -46,12 +50,13 @@ char	*get_next_line(int fd)
 		if (index_nl > 0)
 		{
 			save = ft_substr(current, index_nl + 1, ft_strlen(current));
-			if(!save)
+			if (!save)
 				return (NULL);
 			line = join_strs(line, ft_substr(line, 0, index_nl - 1));
-			if(!line)
+			if (!line)
 				return (NULL);
 			break ;
+			
 		}
 		line = join_strs(line, current);
 	}

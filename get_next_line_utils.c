@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:30:01 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/11 17:17:58 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:48:31 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*join_strs(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(join, s1, s1len + 1);
 	ft_strlcpy(join + s1len, s2, s2len + 1);
+	free(s1);
 	return (join);
 }
 
