@@ -6,22 +6,24 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:30:01 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/11 17:48:31 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:20:33 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "stdio.h"
 
 int	search_nl(const char *s)
 {
 	size_t		i;
 
+	//printf("Searching in %s.\n", s);
 	if (!s)
 		return (-1);
 	i = ft_strlen(s);
 	while (i > 0)
 	{
-		if (s[i] == (unsigned char) '\n')
+		if (s[i] == '\n')
 			return (i);
 		i--;
 	}
@@ -34,6 +36,7 @@ char	*join_strs(char const *s1, char const *s2)
 	size_t	s1len;
 	size_t	s2len;
 
+	//printf("Starting join...\n");
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	join = malloc(sizeof(char) * (s1len + s2len + 1));
@@ -41,7 +44,7 @@ char	*join_strs(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(join, s1, s1len + 1);
 	ft_strlcpy(join + s1len, s2, s2len + 1);
-	free(s1);
+	//printf("joined s1: %s. s2: %s. result: %s.\n", s1, s2, join);
 	return (join);
 }
 

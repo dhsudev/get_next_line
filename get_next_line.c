@@ -5,62 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 12:13:30 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/11 17:45:47 by ltrevin-         ###   ########.fr       */
+/*   Created: 2024/03/12 15:45:30 by ltrevin-          #+#    #+#             */
+/*   Updated: 2024/03/17 20:32:51 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "stdio.h"
 
-char	*read_line(int fd)
+char	*read_buff(int fd)
 {
-	char	*readed;
-	int		bytes_read;
+	char	*readed; 		// The readed chars
+	int		bytes_read;		// The return of the read
 
-	readed = malloc(BUFFER_SIZE * sizeof(char));
-	if (!readed)
+	readed = malloc(BUFFER_SIZE * (sizeof(char)));
+	if (!readed) // Malloc protec
 		return (NULL);
 	bytes_read = read(fd, readed, BUFFER_SIZE);
-	if (bytes_read > 0)
-		return (readed);
-	if(bytes_read == 0)// TODO: Do smthg with the EOF
-		bytes_read = 0;
+	if (bytes_read > 0) // Correct Read
+	{
+		return(readed);
+	}
 	free(readed);
-	return (NULL);
+	//if (bytes_read == 0) // EOF
+	//{
+	//	ft_strlcpy(readed, "\n", 2);
+	//	return(readed);
+	//}
+	return(NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
-	char		*current;
-	char		*line;
-	int			index_nl;
+	static char	*save;		// What i readed the last call
+	char		*line; 		// The line that i will return
+	char		*current;	// To save each read
 
+	// Check valid filedescriptor and buffersize to prevent crash
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	current = read_line(fd);
-	if (!current)
-		return (NULL);
-	while (search_nl(line) == -1 && current)
+	current = read_buff(fd);
+	//printf("First read: %s.\n", current);
+	line = "";
+	if(save)
+		current = join_strs(save, current);
+	save = "";
+	while(search_nl(current) == -1 && current) // While not having nl 
 	{
-		current = read_line(fd);
-		if (!current)
-			return (NULL);
-		index_nl = search_nl(current);
-		if (index_nl > 0)
-		{
-			save = ft_substr(current, index_nl + 1, ft_strlen(current));
-			if (!save)
-				return (NULL);
-			line = join_strs(line, ft_substr(line, 0, index_nl - 1));
-			if (!line)
-				return (NULL);
-			break ;
-			
-		}
+		//printf("return of the search_nl: %d\n", search_nl(line));
 		line = join_strs(line, current);
+		//printf("line: %s\n", line);
+		current = read_buff(fd);
 	}
-	if (!line)
-		return (NULL);
-	return (line);
+	line = join_strs(line, current);
+	save = ft_substr(line, search_nl(line)+1, ft_strlen(line));
+	//printf("Saved 4 later: %s.\n", save);
+	line = ft_substr(line, 0, search_nl(line));
+	return(line);
 }
