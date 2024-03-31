@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:30:01 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/03/12 17:20:33 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:27:48 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@ int	search_nl(const char *s)
 	//printf("Searching in %s.\n", s);
 	if (!s)
 		return (-1);
-	i = ft_strlen(s);
-	while (i > 0)
+	i = 0;
+	while (s[i])
 	{
-		if (s[i] == '\n')
+		if (s[i] == '\n' || s[i] == EOF)
 			return (i);
-		i--;
+		i++;
 	}
+	//if (s[i] == '\n' || s[i] == EOF)
+	//		return (i);
 	return (-1);
 }
 
-char	*join_strs(char const *s1, char const *s2)
+char	*join_strs(char *s1, char *s2)
 {
 	char	*join;
 	size_t	s1len;
@@ -42,9 +44,11 @@ char	*join_strs(char const *s1, char const *s2)
 	join = malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!join)
 		return (NULL);
-	ft_strlcpy(join, s1, s1len + 1);
-	ft_strlcpy(join + s1len, s2, s2len + 1);
+	ft_strlcpy(join, s1, s1len+1);
+	if(s2)
+		ft_strlcpy(join + s1len, s2, s2len + 1);
 	//printf("joined s1: %s. s2: %s. result: %s.\n", s1, s2, join);
+	//free(s1);
 	return (join);
 }
 
@@ -72,6 +76,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 	
 	i = 0;
+	if(!s)
+		return(0);
 	while (s[i] != '\0')
 	{
 		i++;
