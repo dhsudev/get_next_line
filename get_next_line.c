@@ -13,67 +13,61 @@
 #include "get_next_line.h"
 #include "stdio.h"
 
-char *freeee(char **s){
-	free(*s);
-	*s = NULL;
-	return(NULL);	
+void freeee(char *s){
+	if (!s)
+		return ;
+	free(s);
+	s = NULL;
 }
-char	*read_buff(int fd)
+char	*read_buff(int fd, char* save)
 {
-	char	*readed; 		// The readed chars
-	int		bytes_read;		// The return of the read
+	char	*readed;
+	int		bytes_read;
 
-	readed = malloc(BUFFER_SIZE * (sizeof(char)+1));
-	if (!readed){ // Malloc protec
-		return (freeee(&readed));
-	}
+	readed = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!readed)
+		return(NULL);
 	bytes_read = read(fd, readed, BUFFER_SIZE);
-	//printf("%s\n",readed);
-	if (bytes_read > 0) // Correct Read
+	if (bytes_read > 0)
 	{
 		readed[bytes_read] = '\0';
 		return(readed);
 	}
-	free(readed);
-	//if (bytes_read == 0) // EOF
-	//{
-	//	ft_strlcpy(readed, "\n", 2);
-	//	return(readed);
-	//}
+	if(bytes_read == -1)
+		freeee(save);
+	freeee(readed);
 	return(NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*save;		// What i readed the last call
-	char		*line; 		// The line that i will return
-	char		*current;	// To save each read
+	static char	*save = NULL;
+	char		*line;
+	char		*current;
 
-	// Check valid filedescriptor and buffersize to prevent crash
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	current = read_buff(fd);
-	//printf("First read: %s.\n", current);
-	line = "";
+	current = read_buff(fd, save);
 	if(save)
-		current = join_strs(save, current);
-	if(!current){
+		current = join_strs(save, current, 3);
+	if(!current)
 		return (NULL);
-	}
-	while(search_nl(current) == -1 && current) // While not having nl 
+	line = malloc(sizeof(char) * 1);
+	if (!line)
+		return (freeee(current), NULL);
+	line[0] = '\0';
+	while(search_nl(current) == -1 && current)
 	{
-		//printf("return of the search_nl with (%s): %d\n",current, search_nl(current));
-		line = join_strs(line, current);
-		//printf("line: %s\n", line);
-		current = read_buff(fd);
+		line = join_strs(line, current, 1);
+		//if 
+		freeee(current);
+		current = read_buff(fd, save);
 	}
-	//printf("return of the search_nl with (%s): %d\n",current, search_nl(current));
-	//printf("final join %s. + %s.\n", line, current);
-	save = ft_substr(current, search_nl(current)+1, ft_strlen(current));
-	current = ft_substr(current, 0, search_nl(current)+1);
-	line = join_strs(line, current);
-	free(current);
-	//printf("Saved 4 later: %s.\n", save);
-	//line = ft_substr(line, 0, search_nl(line));
+	save = ft_substr(current, search_nl(current) + 1, ft_strlen(current), 0);
+	current = ft_substr(current, 0, search_nl(current) + 1, 1);
+	line = join_strs(line, current, 1);
+	freeee(current);
+	if (line[0] == '\0')
+		return (freeee(line), NULL);
 	return(line);
 }

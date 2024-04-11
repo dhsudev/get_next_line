@@ -17,7 +17,6 @@ int	search_nl(const char *s)
 {
 	size_t		i;
 
-	//printf("Searching in %s.\n", s);
 	if (!s)
 		return (-1);
 	i = 0;
@@ -27,28 +26,27 @@ int	search_nl(const char *s)
 			return (i);
 		i++;
 	}
-	//if (s[i] == '\n' || s[i] == EOF)
-	//		return (i);
 	return (-1);
 }
 
-char	*join_strs(char *s1, char *s2)
+char	*join_strs(char *s1, char *s2, int flag)
 {
 	char	*join;
 	size_t	s1len;
 	size_t	s2len;
 
-	//printf("Starting join...\n");
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	join = malloc(sizeof(char) * (s1len + s2len + 1));
 	if (!join)
 		return (NULL);
 	ft_strlcpy(join, s1, s1len+1);
-	if(s2)
-		ft_strlcpy(join + s1len, s2, s2len + 1);
-	//printf("joined s1: %s. s2: %s. result: %s.\n", s1, s2, join);
-	//free(s1);
+	ft_strlcpy(join + s1len, s2, s2len + 1);
+	if (flag == 1 || flag == 3)
+		freeee(s1);
+	if (flag == 2 || flag == 3)
+		freeee(s2);
+
 	return (join);
 }
 
@@ -59,15 +57,15 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 
 	i = 0;
 	src_size = ft_strlen(src);
-	if (size != 0)
+	if (size != 0 && src_size != 0)
 	{
 		while (src[i] != '\0' && i < size - 1)
 		{
 			dest[i] = src[i];
 			i ++;
 		}
-		dest[i] = '\0';
 	}
+	dest[i] = '\0';
 	return (src_size);
 }
 
@@ -85,7 +83,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len, int flag)
 {
 	char	*sub;
 	size_t	slen;
@@ -95,10 +93,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	slen = ft_strlen(s);
 	if (slen <= start)
 	{
-		sub = malloc(ft_strlen("") * (sizeof(char) + 1));
+		sub = malloc(1 * (sizeof(char)));
 		if (!sub)
 			return (NULL);
-		ft_strlcpy(sub, "", ft_strlen("") + 1);
+		sub[0] = '\0';
 		return (sub);
 	}
 	if (len > (slen - start))
@@ -107,5 +105,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!sub)
 		return (NULL);
 	ft_strlcpy(sub, s + start, len + 1);
+	if (flag == 1)
+		freeee(s);
 	return (sub);
 }
