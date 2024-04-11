@@ -23,10 +23,10 @@
 
 char	*get_next_line(int fd);
 int		search_nl(const char *s);
-char	*join_strs(char *s1, char *s2);
+char	*join_strs(char *s1, char *s2, int flag);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-
+char	*ft_substr(char *s, unsigned int start, size_t len, int flag);
+void	freeee(char *s);
 
 #endif
