@@ -5,17 +5,17 @@
 int main(void)
 {
 	int    fd;
-	char  *next_line = "";
+	char  *next_line;
 	int  count;
 
 	count = 0;
 	printf("Init program\n");
 	fd = open("file.txt", O_RDONLY);
 	printf("File open succes!\n");
-	while (next_line){
+	while (count < 8){
 		next_line = get_next_line(fd);
 		printf("------------[%d]:%s.\n", count, next_line);
-		free(next_line);
+		// free(next_line);
 		count++;
 	}
 	close(fd);
