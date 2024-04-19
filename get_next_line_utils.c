@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/04/18 19:46:50 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:13:49 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	lstadd_back(t_list **lst, t_list *new)
 
 	if (*lst == NULL)
 	{
-		printf("holaaaaaaaaaa\n");
 		*lst = new;
 		return ;
 	}
@@ -28,7 +27,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 	while (temp && temp->next)
 		temp = temp->next;
 	temp->next = new;
-	printf("|%p|%p|\n", (*lst)->content, (*lst)->next->content);
+	//printf("|%p|%p|\n", (*lst)->content, (*lst)->next->content);
 }
 
 // void	lstclear(t_list **lst, void (*del)(void *))
