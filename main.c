@@ -12,9 +12,9 @@ int main(void)
 	printf("Init program\n");
 	fd = open("file.txt", O_RDONLY);
 	printf("File open succes!\n");
-	while (count < 3){
+	while (next_line){
 		next_line = get_next_line(fd);
-		printf("≠≠≠≠≠≠÷[%d]:%s.\n", count, next_line);
+		printf("	Returned in [%d]: |%s|\n", count, next_line);
 		// free(next_line);
 		count++;
 	}

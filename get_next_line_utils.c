@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/04/19 12:13:49 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:06:16 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,34 @@ t_list	*lstnew(void *content)
 // 	ft_strlcpy(s2, s1, size + 1);
 // 	return (s2);
 // }
+void	clean_lst(t_list **lst, int line_size)
+{
+	t_list	*temp;
+	t_list	*next;
+	int		i = 0;
+	char	aux[BUFFER_SIZE] = "";
+	
+	temp = *lst;
+	next = temp->next;
+	while(temp->next)
+	{
+		next = temp->next;
+		free(temp->content);
+		free(temp);
+		temp = next;
+	}
+	*lst = temp;
+	while((*lst)->content[line_size])
+	{
+		aux[i] = (*lst)->content[line_size];
+		line_size++;
+		i++;
+	}
+	//free((*lst)->content);
+	free(*lst);
+	*lst = lstnew(aux);
+	//free(aux);
+	//printf("Node to save: |%s|\n", (char *) temp->content);
+}
 
 
