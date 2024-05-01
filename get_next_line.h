@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/04/18 19:11:33 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:42:51 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stddef.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 2
 # endif
 
 typedef struct s_list
@@ -29,7 +29,6 @@ typedef struct s_list
 
 char	*get_next_line(int fd);
 t_list	*lstnew(void *content);
-void	lstclear(t_list **lst, void (*del)(void *));
 void	lstadd_back(t_list **lst, t_list *new);
-
+void	clean_lst(t_list **lst);
 #endif

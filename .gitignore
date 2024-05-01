@@ -5,5 +5,5 @@
 *.o
 gitscript.sh
 .vscode
-.txt
+*.txt
 main.c

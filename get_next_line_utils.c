@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/04/18 19:46:50 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:54:22 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	lstadd_back(t_list **lst, t_list *new)
 
 	if (*lst == NULL)
 	{
-		printf("holaaaaaaaaaa\n");
 		*lst = new;
 		return ;
 	}
@@ -28,24 +27,8 @@ void	lstadd_back(t_list **lst, t_list *new)
 	while (temp && temp->next)
 		temp = temp->next;
 	temp->next = new;
-	printf("|%p|%p|\n", (*lst)->content, (*lst)->next->content);
+	//printf("|%p|%p|\n", (*lst)->content, (*lst)->next->content);
 }
-
-// void	lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*aux;
-// 	t_list	*save;
-
-// 	aux = *lst;
-// 	while (aux)
-// 	{
-// 		save = aux->next;
-// 		del(aux->content);
-// 		free(aux);
-// 		aux = save;
-// 	}
-// 	*lst = NULL;
-// }
 
 t_list	*lstnew(void *content)
 {
@@ -70,5 +53,19 @@ t_list	*lstnew(void *content)
 // 	ft_strlcpy(s2, s1, size + 1);
 // 	return (s2);
 // }
+void	clean_lst(t_list **lst)
+{
+	t_list	*tmp;
+
+	while (*lst)
+	{
+		tmp = (**lst).next;
+		free((**lst).content);
+		free(*lst);
+		*lst = tmp;
+	}
+	free(*lst);
+	*lst = NULL;
+}
 
 
