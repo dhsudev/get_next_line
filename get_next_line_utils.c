@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/04/21 19:06:16 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/04/29 14:54:22 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,6 @@ void	lstadd_back(t_list **lst, t_list *new)
 	temp->next = new;
 	//printf("|%p|%p|\n", (*lst)->content, (*lst)->next->content);
 }
-
-// void	lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*aux;
-// 	t_list	*save;
-
-// 	aux = *lst;
-// 	while (aux)
-// 	{
-// 		save = aux->next;
-// 		del(aux->content);
-// 		free(aux);
-// 		aux = save;
-// 	}
-// 	*lst = NULL;
-// }
 
 t_list	*lstnew(void *content)
 {
@@ -69,34 +53,19 @@ t_list	*lstnew(void *content)
 // 	ft_strlcpy(s2, s1, size + 1);
 // 	return (s2);
 // }
-void	clean_lst(t_list **lst, int line_size)
+void	clean_lst(t_list **lst)
 {
-	t_list	*temp;
-	t_list	*next;
-	int		i = 0;
-	char	aux[BUFFER_SIZE] = "";
-	
-	temp = *lst;
-	next = temp->next;
-	while(temp->next)
+	t_list	*tmp;
+
+	while (*lst)
 	{
-		next = temp->next;
-		free(temp->content);
-		free(temp);
-		temp = next;
+		tmp = (**lst).next;
+		free((**lst).content);
+		free(*lst);
+		*lst = tmp;
 	}
-	*lst = temp;
-	while((*lst)->content[line_size])
-	{
-		aux[i] = (*lst)->content[line_size];
-		line_size++;
-		i++;
-	}
-	//free((*lst)->content);
 	free(*lst);
-	*lst = lstnew(aux);
-	//free(aux);
-	//printf("Node to save: |%s|\n", (char *) temp->content);
+	*lst = NULL;
 }
 
 
