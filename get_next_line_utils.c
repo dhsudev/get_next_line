@@ -6,13 +6,11 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:36:37 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/05/05 20:11:38 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:25:49 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h>
 
 int	has_nl(t_list *lst)
 {
@@ -90,14 +88,14 @@ int	index_newline(t_list *lst)
 
 void clear_lst(t_list **lst)
 {
-    t_list *tmp;
+	t_list *tmp;
 
-    while (*lst) 
+	while (*lst) 
 	{
-        tmp = (*lst)->next;
-        free((*lst)->content);
-	    free(*lst);
-        *lst = tmp;
-    }
-    *lst = NULL;
+		tmp = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }
